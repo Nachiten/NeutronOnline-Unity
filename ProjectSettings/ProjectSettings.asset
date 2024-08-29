@@ -13,7 +13,7 @@ PlayerSettings:
   useOnDemandResources: 0
   accelerometerFrequency: 60
   companyName: Nachiten
-  productName: Template_OnlineGame
+  productName: NeutronOnline
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
@@ -685,10 +685,10 @@ PlayerSettings:
   captureStartupLogs: {}
   activeInputHandler: 2
   windowsGamepadBackendHint: 0
-  cloudProjectId: e449a67d-c3ca-459e-bdaa-8d5da7ce7ec4
+  cloudProjectId: d8d996af-4d00-4343-98b2-67e30e1a4550
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: Template_OnlineGame
+  projectName: NeutronOnline
   organizationId: ignacio-4481857
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
