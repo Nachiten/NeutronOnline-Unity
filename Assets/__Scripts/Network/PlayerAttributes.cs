@@ -1,0 +1,127 @@
+﻿using System.Collections.Generic;
+using System.Linq;
+using Unity.Netcode;
+using UnityEngine;
+using Random = UnityEngine.Random;
+
+/// <summary>
+/// Manages the player attributes.
+/// </summary>
+public class PlayerAttributes : Singleton<PlayerAttributes>
+{
+    private const string PLAYER_PREFS_PLAYER_NAME = "playerName";
+    
+    [SerializeField] private List<Color> playerColors;
+    
+    private string localPlayerName;
+    private ushort localPlayerColorId;
+    private ulong localClientId;
+    
+    // Dependencies
+    private PlayerDataHandler playerDataHandler;
+    private NetworkManager networkManager;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        
+        DontDestroyOnLoad(gameObject);
+
+        string defaultPlayerName = "PlayerName" + Random.Range(1000, 10000);
+        
+        localPlayerName = PlayerPrefs.GetString(PLAYER_PREFS_PLAYER_NAME, defaultPlayerName);
+        localPlayerColorId = 0;
+    }
+
+    private void Start()
+    {
+        playerDataHandler = PlayerDataHandler.Instance;
+        networkManager = NetworkManager.Singleton;
+    }
+
+    public void SetLocalClientId(ulong _localClientId)
+    {
+        localClientId = _localClientId;
+    }
+    
+    private ushort GetNextAvailableColorId(ushort colorId)
+    {
+        ushort newPlayerColorId = colorId;
+
+        while (true)
+        {
+            newPlayerColorId++;
+
+            if (newPlayerColorId >= playerColors.Count)
+                newPlayerColorId = 0;
+
+            if (!IsColorIdUsed(newPlayerColorId))
+                return newPlayerColorId;
+        }
+    }
+    
+    private string GenerateAvailablePlayerName(string playerName)
+    {
+        int counter = 2;
+        
+        while (true)
+        {
+            string newPlayerName = playerName + counter;
+    
+            if (!IsNameUsed(newPlayerName))
+                return newPlayerName;
+
+            counter++;
+        }
+    }
+
+    private bool IsColorIdUsed(ushort colorId, bool includeLocalClient = false)
+    {
+        return playerDataHandler.GetAllPlayerData()
+            .Any(_playerData => _playerData.colorId == colorId &&
+                                (_playerData.clientId != networkManager.LocalClientId || includeLocalClient));
+    }
+    
+    private bool IsNameUsed(string playerName)
+    {
+        return playerDataHandler.GetAllPlayerData()
+            .Any(_playerData => _playerData.name == playerName && _playerData.clientId != networkManager.LocalClientId);
+    }
+    
+    public void UpdateNameIfNotAvailable()
+    {
+        if (!IsNameUsed(localPlayerName)) 
+            return;
+        
+        localPlayerName = GenerateAvailablePlayerName(localPlayerName);
+    }
+    
+    public void UpdateColorIfNotAvailable()
+    {
+        if (!IsColorIdUsed(localPlayerColorId)) 
+            return;
+        
+        localPlayerColorId = GetNextAvailableColorId(localPlayerColorId);
+    }
+    
+    public string GetLocalPlayerName()
+    {
+        return localPlayerName;
+    }
+    
+    public ushort GetLocalPlayerColorId()
+    {
+        return localPlayerColorId;
+    }
+    
+    public Color GetColorFromColorId(ushort colorId)
+    {
+        return playerColors[colorId];
+    }
+
+    public void SetLocalPlayerName(string newText)
+    {
+        localPlayerName = newText;
+        PlayerPrefs.SetString(PLAYER_PREFS_PLAYER_NAME, localPlayerName);
+    }
+}
