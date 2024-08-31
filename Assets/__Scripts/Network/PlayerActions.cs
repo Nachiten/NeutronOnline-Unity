@@ -73,6 +73,12 @@ public class PlayerActions : SingletonNetwork<PlayerActions>
         if (networkManager.IsServer)
         {
             playerDataHandler.AddPlayerData(clientId, "", 0, "");
+            
+            if (clientId == 0)
+            {
+                SetPlayerNameServerRpc(playerAttributes.GetLocalPlayerName());
+                SetPlayerColorServerRpc(playerAttributes.GetLocalPlayerColorId());
+            }
         }
         // Client connecting to server
         else
