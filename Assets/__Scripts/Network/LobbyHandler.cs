@@ -149,7 +149,7 @@ public class LobbyHandler : Singleton<LobbyHandler>
         }
         catch (Exception e) 
         {
-            Debug.LogError(e);
+            Debug.LogError("[LobbyHandler] Error Listing Lobbies" + e);
         }
     }
 
@@ -161,7 +161,7 @@ public class LobbyHandler : Singleton<LobbyHandler>
         } 
         catch (Exception e)
         {
-            Debug.LogError(e);
+            Debug.LogError("[LobbyHandler] Error Allocating Relay" + e);
             return default;
         }
     }
@@ -174,7 +174,7 @@ public class LobbyHandler : Singleton<LobbyHandler>
         }
         catch (Exception e)
         {
-            Debug.LogError(e);
+            Debug.LogError("[LobbyHandler] Error Getting Relay Join Code" + e);
             return default;
         }
     }
@@ -187,7 +187,7 @@ public class LobbyHandler : Singleton<LobbyHandler>
         }
         catch (Exception e)
         {
-            Debug.LogError(e);
+            Debug.LogError("[LobbyHandler] Error Joining Relay" + e);
             return default;
         }
     }
@@ -226,7 +226,8 @@ public class LobbyHandler : Singleton<LobbyHandler>
         }
         catch (Exception e) 
         {
-            Debug.LogError(e);
+            Debug.LogError("[LobbyHandler] Error creating lobby: " + e);
+            DeleteLobby();
             OnCreateLobbyFailed?.Invoke();
         }
     }
@@ -248,14 +249,9 @@ public class LobbyHandler : Singleton<LobbyHandler>
                 .SetRelayServerData(relayServerData);
             playerActions.StartClient();
         }
-        catch (LobbyServiceException e)
-        {
-            Debug.LogError("LobbyServiceException:\n" + e);
-            OnQuickJoinFailed?.Invoke();
-        }
-        catch (NullReferenceException e)
+        catch (Exception e)
         { 
-            Debug.LogError("NullReferenceException:\n" + e);
+            Debug.Log("[LobbyHandler] Quick Join Failed: " + e);
             LeaveLobby();
             OnQuickJoinFailed?.Invoke();
         }
@@ -291,7 +287,7 @@ public class LobbyHandler : Singleton<LobbyHandler>
         }
         catch (Exception e) 
         {
-            Debug.LogError(e);
+            Debug.Log("[LobbyHandler] Join With Code Failed: " + e);
             OnJoinWithCodeFailed?.Invoke();
         }
     }
@@ -315,7 +311,7 @@ public class LobbyHandler : Singleton<LobbyHandler>
         }
         catch (Exception e) 
         {
-            Debug.LogError(e);
+            Debug.Log("[LobbyHandler] Join With Id Failed: " + e);
             OnJoinWithCodeFailed?.Invoke();
         }
     }
@@ -333,7 +329,7 @@ public class LobbyHandler : Singleton<LobbyHandler>
         } 
         catch (Exception e)
         {
-            Debug.LogError(e);
+            Debug.LogError("[LobbyHandler] Error Deleting Lobby: " + e);
         }
     }
 
@@ -350,7 +346,7 @@ public class LobbyHandler : Singleton<LobbyHandler>
         } 
         catch (LobbyServiceException e)
         {
-            Debug.LogError(e);
+            Debug.LogError("[LobbyHandler] Error Leaving Lobby: " + e);
         }
     }
     
@@ -366,7 +362,7 @@ public class LobbyHandler : Singleton<LobbyHandler>
         } 
         catch (LobbyServiceException e)
         {
-            Debug.LogError(e);
+            Debug.LogError("[LobbyHandler] Error Kicking Player: " + e);
         }
     }
     

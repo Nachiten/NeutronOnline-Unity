@@ -69,25 +69,21 @@ public class PlayerActions : SingletonNetwork<PlayerActions>
     {
         Debug.Log("OnClientConnectedCallback: " + clientId + " | IsServer: " + networkManager.IsServer, this);
 
+        // Server receiving a new client
         if (networkManager.IsServer)
         {
-            // Server receiving a new client, add player data
             playerDataHandler.AddPlayerData(clientId, "", 0, "");
         }
+        // Client connecting to server
         else
         {
-            // Client connecting to server, update name and color if not available
-            playerAttributes.UpdateNameIfNotAvailable();
-            playerAttributes.UpdateColorIfNotAvailable();
-            
             playerAttributes.SetLocalClientId(clientId);
-            
             SetPlayerIdServerRpc(authenticationService.PlayerId);
+            
+            // Set local player name and color for everyone
+            SetPlayerNameServerRpc(playerAttributes.GetLocalPlayerName());
+            SetPlayerColorServerRpc(playerAttributes.GetLocalPlayerColorId());
         }
-        
-        // Set local player name and color for everyone
-        SetPlayerNameServerRpc(playerAttributes.GetLocalPlayerName());
-        SetPlayerColorServerRpc(playerAttributes.GetLocalPlayerColorId());
     }
     
     private void OnClientDisconnectCallback(ulong clientId)
@@ -111,6 +107,7 @@ public class PlayerActions : SingletonNetwork<PlayerActions>
         int playerDataIndex = playerDataHandler.GetPlayerDataIndexFromClientId(rpcParams.Receive.SenderClientId);
         PlayerData _playerData = playerDataHandler.GetPlayerDataFromClientId(rpcParams.Receive.SenderClientId);
         
+        playerName = playerAttributes.UpdateNameIfNotAvailable(playerName);
         _playerData.name = (FixedString64Bytes)playerName;
         
         playerDataHandler.UpdatePlayerData(playerDataIndex, _playerData);
@@ -122,6 +119,7 @@ public class PlayerActions : SingletonNetwork<PlayerActions>
         int playerDataIndex = playerDataHandler.GetPlayerDataIndexFromClientId(rpcParams.Receive.SenderClientId);
         PlayerData _playerData = playerDataHandler.GetPlayerDataFromClientId(rpcParams.Receive.SenderClientId);
         
+        colorId = playerAttributes.UpdateColorIfNotAvailable(colorId);
         _playerData.colorId = colorId;
         
         playerDataHandler.UpdatePlayerData(playerDataIndex, _playerData);

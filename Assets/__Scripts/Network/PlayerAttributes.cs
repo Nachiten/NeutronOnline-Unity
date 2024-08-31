@@ -37,6 +37,18 @@ public class PlayerAttributes : Singleton<PlayerAttributes>
     {
         playerDataHandler = PlayerDataHandler.Instance;
         networkManager = NetworkManager.Singleton;
+        
+        playerDataHandler.OnPlayerDataChanged += OnPlayerDataChanged;
+    }
+
+    private void OnPlayerDataChanged()
+    {
+        PlayerData localPlayerData = playerDataHandler.GetLocalPlayerData();
+        
+        if (localPlayerData.name != "")
+            localPlayerName = localPlayerData.name.ToString();
+        
+        localPlayerColorId = localPlayerData.colorId;
     }
 
     public void SetLocalClientId(ulong _localClientId)
@@ -88,20 +100,14 @@ public class PlayerAttributes : Singleton<PlayerAttributes>
             .Any(_playerData => _playerData.name == playerName && _playerData.clientId != networkManager.LocalClientId);
     }
     
-    public void UpdateNameIfNotAvailable()
+    public string UpdateNameIfNotAvailable(string playerName)
     {
-        if (!IsNameUsed(localPlayerName)) 
-            return;
-        
-        localPlayerName = GenerateAvailablePlayerName(localPlayerName);
+        return !IsNameUsed(playerName) ? playerName : GenerateAvailablePlayerName(playerName);
     }
     
-    public void UpdateColorIfNotAvailable()
+    public ushort UpdateColorIfNotAvailable(ushort colorId)
     {
-        if (!IsColorIdUsed(localPlayerColorId)) 
-            return;
-        
-        localPlayerColorId = GetNextAvailableColorId(localPlayerColorId);
+        return !IsColorIdUsed(colorId) ? colorId : GetNextAvailableColorId(colorId);
     }
     
     public string GetLocalPlayerName()
