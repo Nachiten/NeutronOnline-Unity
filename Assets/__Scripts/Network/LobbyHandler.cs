@@ -41,6 +41,7 @@ public class LobbyHandler : Singleton<LobbyHandler>
     private IRelayService relayService;
     private NetworkManager networkManager;
     private PlayerActions playerActions;
+    private PlayerReady playerReady;
     
     protected override void Awake()
     {
@@ -57,8 +58,10 @@ public class LobbyHandler : Singleton<LobbyHandler>
         lobbyService = LobbyService.Instance;
         relayService = RelayService.Instance;
         playerActions = PlayerActions.Instance;
+        playerReady = PlayerReady.Instance;
         
-        PlayerReady.OnEveryPlayerReady += StartGame;
+        //playerReady.OnEveryPlayerReady += StartGame;
+        GameStartTimerUI.OnGameStartTimerFinished += StartGame;
     }
 
     private void Update()
@@ -373,6 +376,10 @@ public class LobbyHandler : Singleton<LobbyHandler>
     
     private void StartGame() 
     {
-        SceneLoader.LoadNetworkScene(SceneName._4_Game);
+        if (NetworkManager.Singleton.IsServer)
+        {
+            Debug.Log("STARTING GAME!!!");
+            SceneLoader.LoadNetworkScene(SceneName._4_Game);
+        }
     }
 }

@@ -6,14 +6,18 @@ using UnityEngine;
 
 public class PlayerReady : SingletonNetwork<PlayerReady>
 {
-    public static event Action OnEveryPlayerReady;
+    public event Action<bool> OnEveryPlayerReadyChanged;
     public event Action OnReadyChanged;
 
     private Dictionary<ulong, bool> playersReady;
+    private bool everyPlayerReady;
     
     // Dependencies
     private NetworkManager networkManager;
 
+    // TODO - When a player disconnects, the event should be triggered
+    // When a player joins, the event should be triggered
+    
     protected override void Awake()
     {
         base.Awake();
@@ -24,8 +28,36 @@ public class PlayerReady : SingletonNetwork<PlayerReady>
     private void Start()
     {
         networkManager = NetworkManager.Singleton;
+        
+        networkManager.OnClientConnectedCallback += OnClientConnectedCallback;
+        networkManager.OnClientDisconnectCallback += OnClientDisconnectCallback;
     }
-    
+
+    public override void OnDestroy()
+    {
+        base.OnDestroy();
+        
+        if (networkManager == null)
+            return;
+        
+        networkManager.OnClientConnectedCallback -= OnClientConnectedCallback;
+        networkManager.OnClientDisconnectCallback -= OnClientDisconnectCallback;
+    }
+
+    private void OnClientDisconnectCallback(ulong clientId)
+    {
+        // If the player that disconnected was the local player, we don't need to update the ready state
+        if (clientId == networkManager.LocalClientId)
+            return;
+        
+        UpdatePlayerReadyClientRpc();
+    }
+
+    private void OnClientConnectedCallback(ulong clientId)
+    {
+        UpdatePlayerReadyClientRpc();
+    }
+
     public override void OnNetworkSpawn()
     {
         if (!NetworkManager.Singleton.IsServer)
@@ -73,12 +105,6 @@ public class PlayerReady : SingletonNetwork<PlayerReady>
         ulong clientId = serverRpcParams.Receive.SenderClientId;
 
         SetPlayerReadyClientRpc(ready, clientId);
-        playersReady[clientId] = ready;
-
-        if (!AllClientsReady()) 
-            return;
-        
-        OnEveryPlayerReady?.Invoke();
     }
 
     [Rpc(SendTo.ClientsAndHost)]
@@ -87,16 +113,36 @@ public class PlayerReady : SingletonNetwork<PlayerReady>
         playersReady[clientId] = ready;
 
         OnReadyChanged?.Invoke();
+
+        AllClientsReadyLogic();
+    }
+
+    [Rpc(SendTo.ClientsAndHost)]
+    private void UpdatePlayerReadyClientRpc()
+    {
+        AllClientsReadyLogic();
+    }
+
+    private void AllClientsReadyLogic()
+    {
+        if (AllClientsReady())
+        {
+            everyPlayerReady = true;
+            OnEveryPlayerReadyChanged?.Invoke(everyPlayerReady);
+        }
+        else if (everyPlayerReady)
+        {
+            everyPlayerReady = false;
+            OnEveryPlayerReadyChanged?.Invoke(everyPlayerReady);
+        }
     }
     
     private bool AllClientsReady()
     {
+        if (networkManager == null)
+            return false;
+        
         return networkManager.ConnectedClientsIds
             .All(clientId => playersReady.ContainsKey(clientId) && playersReady[clientId]);
-    }
-    
-    public static void ResetStaticData()
-    {
-        OnEveryPlayerReady = null;
     }
 }
