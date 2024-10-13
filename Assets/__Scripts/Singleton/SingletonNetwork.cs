@@ -1,7 +1,7 @@
 using Unity.Netcode;
 
 /// <summary>
-/// Network behaviour singleton.
+/// NetworkBehaviour singleton.
 /// </summary>
 /// <typeparam name="T">Type of the singleton.</typeparam>
 public class SingletonNetwork<T> : NetworkBehaviour where T : NetworkBehaviour

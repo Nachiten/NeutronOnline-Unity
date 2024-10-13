@@ -14,9 +14,6 @@ public class PlayerReady : SingletonNetwork<PlayerReady>
     
     // Dependencies
     private NetworkManager networkManager;
-
-    // TODO - When a player disconnects, the event should be triggered
-    // When a player joins, the event should be triggered
     
     protected override void Awake()
     {
