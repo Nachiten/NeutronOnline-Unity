@@ -73,6 +73,11 @@ public class PlayerDataHandler : SingletonNetwork<PlayerDataHandler>
         return GetPlayerDataFromClientId(networkManager.LocalClientId);
     }
     
+    public int GetLocalPlayerIndex()
+    {
+        return GetPlayerDataIndexFromClientId(networkManager.LocalClientId);
+    }
+    
     public bool IsPlayerIndexConnected(int playerIndex)
     {
         return playerIndex < playerData.Count;

@@ -5,14 +5,17 @@ using UnityEngine;
 public class GameStartTimerUI : MonoBehaviour
 {
     public static event Action OnGameStartTimerFinished;
-    
+
+    [SerializeField] private float gameStartTimerMax = 1f;
     [SerializeField] private TMP_Text gameStartTimerText;
 
-    private readonly Timer timer = new(7, true, false);
+    private readonly Timer gameStartTimer = new(0, true, false);
     private bool timerRunning;
     
     private void Start()
     {
+        gameStartTimer.SetTimerMax(gameStartTimerMax);
+        
         PlayerReady.Instance.OnEveryPlayerReadyChanged += OnEveryPlayerReadyChanged;
         
         SetShow(false);
@@ -39,9 +42,9 @@ public class GameStartTimerUI : MonoBehaviour
         if (!timerRunning)
             return;
         
-        gameStartTimerText.text = "Game starting in " + Mathf.CeilToInt(timer.GetTimer());
+        gameStartTimerText.text = "Game starting in " + Mathf.CeilToInt(gameStartTimer.GetTimer());
         
-        if (timer.TryFinishTimer())
+        if (gameStartTimer.TryFinishTimer())
         {
             OnGameStartTimerFinished?.Invoke();
             StopTimer();
@@ -51,7 +54,7 @@ public class GameStartTimerUI : MonoBehaviour
     private void StartTimer()
     {
         timerRunning = true;
-        timer.Reset();
+        gameStartTimer.Reset();
         SetShow(true);
     }
     
