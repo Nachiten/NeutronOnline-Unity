@@ -14,11 +14,11 @@ public class TurnSystem : NetworkBehaviour
 
     private enum State
     {
-        // Description: The player is moving the Neutron
+        // The player is moving the Neutron
         MovingNeutron,
-        // Description: The player is moving an Electron
+        // The player is moving an Electron
         MovingElectron,
-        // Description: The script is waiting for the movement to finish
+        // The script is waiting for the movement to finish
         WaitingForMovementFinish
     }
     
@@ -41,8 +41,16 @@ public class TurnSystem : NetworkBehaviour
         localPlayerIndex = PlayerDataHandler.Instance.GetLocalPlayerIndex();
     }
 
-    private void OnMoveStarted(GridPosition obj)
+    private void OnMoveStarted(GridPosition newGridPos)
     {
+        OnMoveStartedClientRpc();
+    }
+    
+    [Rpc(SendTo.Everyone)]
+    private void OnMoveStartedClientRpc()
+    {
+        Debug.Log("OnMoveStartedClientRpc");
+        
         switch (state)
         {
             case State.MovingNeutron:
@@ -60,18 +68,24 @@ public class TurnSystem : NetworkBehaviour
     
     private void OnMoveEnded(GridPosition newGridPos)
     {
+        OnMoveEndedClientRpc();
+    }
+
+    [Rpc(SendTo.Everyone)]
+    private void OnMoveEndedClientRpc()
+    {
+        Debug.Log("OnMoveEndedClientRpc");
+        
         if (nextState == State.MovingNeutron)
         {
-            StartNextTurnClientRpc();
+            StartNextTurn();
         }
         
         SetState(nextState);
     }
     
-    [Rpc(SendTo.Everyone)]
-    private void StartNextTurnClientRpc()
+    private void StartNextTurn()
     {
-        Debug.Log("StartNextTurnClientRpc");
         currentTurn++;
         currentPlayerIndex = currentTurn % 2;
     }
