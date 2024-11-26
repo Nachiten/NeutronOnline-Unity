@@ -21,18 +21,15 @@ public class TurnInfoUI : MonoBehaviour
     private void SetupPlayerNames()
     {
         playerNames = new string[2];
-        
-        playerNames[0] = PlayerDataHandler.Instance.GetPlayerDataFromPlayerIndex(0).name.ToString();
-        playerNames[1] = PlayerDataHandler.Instance.GetPlayerDataFromPlayerIndex(1).name.ToString();
+
+        playerNames[0] = PlayerDataHandler.Instance.GetPlayerNameFromPlayerIndex(0);
+        playerNames[1] = PlayerDataHandler.Instance.GetPlayerNameFromPlayerIndex(1);
     }
 
     private void OnStateChanged()
     {
         int playerIndex = turnSystem.GetCurrentPlayerIndex();
         string playerName = playerNames[playerIndex];
-        
-        // Convert first letter of name to upper case
-        playerName = char.ToUpper(playerName[0]) + playerName.Substring(1);
         
         string movingPiece = turnSystem.IsMovingElectron() ? "Electron" : "Neutron";
 

@@ -18,13 +18,13 @@ public class MouseWorldVisual : MonoBehaviour
         mainCamera = Camera.main;
     }
     
-    private void Update()
-    {
-        Vector3 mouseWorldPosition = GetMouseWorldPosition(out bool valid);
-        
-        if (valid)
-            transform.position = mouseWorldPosition;
-    }
+    // private void Update()
+    // {
+    //     Vector3 mouseWorldPosition = GetMouseWorldPosition(out bool valid);
+    //     
+    //     if (valid)
+    //         transform.position = mouseWorldPosition;
+    // }
     
     private static Vector3 GetMouseWorldPosition(out bool valid)
     {

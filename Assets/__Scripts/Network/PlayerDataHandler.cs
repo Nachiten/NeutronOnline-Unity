@@ -68,6 +68,14 @@ public class PlayerDataHandler : SingletonNetwork<PlayerDataHandler>
         return playerData[playerIndex];
     }
     
+    public string GetPlayerNameFromPlayerIndex(int playerIndex)
+    {
+        string playerName = playerData[playerIndex].name.ToString();
+        playerName = char.ToUpper(playerName[0]) + playerName.Substring(1);
+
+        return playerName;
+    }
+    
     public PlayerData GetLocalPlayerData()
     {
         return GetPlayerDataFromClientId(networkManager.LocalClientId);

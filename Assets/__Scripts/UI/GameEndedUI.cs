@@ -14,7 +14,9 @@ public class GameEndedUI : MonoBehaviour
 
     private void OnPlayerWon(int playerIndex)
     {
-        playerWonText.text = $"Player {playerIndex + 1} won!!";
+        string playerName = PlayerDataHandler.Instance.GetPlayerNameFromPlayerIndex(playerIndex);
+        
+        playerWonText.text = $"{playerName} won!!";
         SetShow(true);
     }
     
