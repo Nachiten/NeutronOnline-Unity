@@ -79,8 +79,8 @@ namespace Michsky.MUIP
 
         void Update()
         {
-            if (allowUpdate == false) { return; }
-            if (checkDispose == true && currentTooltip != null && !currentTooltip.gameObject.activeInHierarchy) { currentTooltip.ProcessExit(); }
+            if (!allowUpdate) { return; }
+            if (checkDispose && currentTooltip != null && !currentTooltip.gameObject.activeInHierarchy) { currentTooltip.ProcessExit(); }
 
             CheckForPosition();
         }
@@ -97,8 +97,7 @@ namespace Michsky.MUIP
 
             if (mainCanvas.renderMode == RenderMode.ScreenSpaceCamera || mainCanvas.renderMode == RenderMode.WorldSpace)
             {
-                Vector2 outPoint;
-                RectTransformUtility.ScreenPointToLocalPointInRectangle(tooltipRect.parent.GetComponent<RectTransform>(), Input.mousePosition, targetCamera, out outPoint);
+                RectTransformUtility.ScreenPointToLocalPointInRectangle(tooltipRect.parent.GetComponent<RectTransform>(), cursorPos, targetCamera, out Vector2 outPoint);
                 tooltipRect.localPosition = outPoint;
 
                 if (transitionMode == TransitionMode.Damp) { tooltipContent.transform.localPosition = Vector3.SmoothDamp(tooltipContent.transform.localPosition, contentPos, ref tooltipVelocity, tooltipSmoothness, dampSpeed * 1000, Time.unscaledDeltaTime); }

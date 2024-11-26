@@ -16,7 +16,7 @@ using Random = UnityEngine.Random;
 
 public class LobbyHandler : Singleton<LobbyHandler>
 {
-    private const int MAX_PLAYER_AMOUNT = 4;
+    private const int MAX_PLAYER_AMOUNT = 2;
 
     private const string RELAY_JOIN_CODE_KEY = "RelayJoinCode";
     private const string RELAY_CONNECTION_TYPE = "dtls";

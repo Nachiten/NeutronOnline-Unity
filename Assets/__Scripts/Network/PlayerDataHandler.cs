@@ -72,6 +72,16 @@ public class PlayerDataHandler : SingletonNetwork<PlayerDataHandler>
     {
         return GetPlayerDataFromClientId(networkManager.LocalClientId);
     }
+
+    public PlayerData GetOtherPlayerData()
+    {
+        // Find the first player that is not the local player
+        foreach (PlayerData _playerData in playerData)
+            if (_playerData.clientId != networkManager.LocalClientId)
+                return _playerData;
+        
+        throw new Exception("No other player found.");
+    }
     
     public int GetLocalPlayerIndex()
     {

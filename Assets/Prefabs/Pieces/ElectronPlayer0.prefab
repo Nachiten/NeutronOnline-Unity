@@ -8,6 +8,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2934190599352459991, guid: a79b7ef42d6b74c40b710d20262f5ea1, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 941668822
+      objectReference: {fileID: 0}
     - target: {fileID: 3777561943351016909, guid: a79b7ef42d6b74c40b710d20262f5ea1, type: 3}
       propertyPath: m_Name
       value: ElectronPlayer0

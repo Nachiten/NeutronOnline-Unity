@@ -98,8 +98,8 @@ namespace Michsky.MUIP
 
         void OnEnable()
         {
-            if (isInitialized == false) { Initialize(); }
-            if (updateOnEnable == true && index < items.Count) { SetDropdownIndex(selectedItemIndex); }
+            if (!isInitialized) { Initialize(); }
+            if (updateOnEnable && index < items.Count) { SetDropdownIndex(selectedItemIndex, false); }
 
             listCG.alpha = 0;
             listCG.interactable = false;
@@ -109,7 +109,7 @@ namespace Michsky.MUIP
 
         void Initialize()
         {
-            if (enableTrigger == true && triggerObject != null)
+            if (enableTrigger && triggerObject != null)
             {
                 // triggerButton = gameObject.GetComponent<Button>();
                 triggerEvent = triggerObject.AddComponent<EventTrigger>();
@@ -119,7 +119,7 @@ namespace Michsky.MUIP
                 triggerEvent.GetComponent<EventTrigger>().triggers.Add(entry);
             }
 
-            if (setHighPriority == true)
+            if (setHighPriority)
             {
                 if (contentCG == null) { contentCG = transform.Find("Content/Item List").GetComponent<CanvasGroup>(); }
                 contentCG.alpha = 1;
@@ -134,7 +134,7 @@ namespace Michsky.MUIP
 
             if (listCG == null) { listCG = gameObject.GetComponentInChildren<CanvasGroup>(); }
             if (listRect == null) { listRect = listCG.GetComponent<RectTransform>(); }
-            if (initAtStart == true && items.Count != 0) { SetupDropdown(); }
+            if (initAtStart && items.Count != 0) { SetupDropdown(); }
             if (animationType == AnimationType.Modular && dropdownAnimator != null) { Destroy(dropdownAnimator); }
 
             isInitialized = true;
@@ -142,7 +142,7 @@ namespace Michsky.MUIP
 
         public void SetupDropdown()
         {
-            if (enableScrollbar == false && scrollbar != null) { Destroy(scrollbar); }
+            if (!enableScrollbar && scrollbar != null) { Destroy(scrollbar); }
             if (itemList == null) { itemList = itemParent.GetComponent<VerticalLayoutGroup>(); }
 
             UpdateItemLayout();
@@ -151,7 +151,7 @@ namespace Michsky.MUIP
             foreach (Transform child in itemParent) { Destroy(child.gameObject); }
             for (int i = 0; i < items.Count; ++i)
             {
-                GameObject go = Instantiate(itemObject, new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
+                GameObject go = Instantiate(itemObject, new Vector3(0, 0, 0), Quaternion.identity);
                 go.transform.SetParent(itemParent, false);
                 go.name = items[i].itemName;
 
@@ -177,20 +177,20 @@ namespace Michsky.MUIP
                 {
                     SetDropdownIndex(index = mainItem.itemIndex);
                     onValueChanged.Invoke(index = mainItem.itemIndex);
-                    if (saveSelected == true) { PlayerPrefs.SetInt("Dropdown_" + saveKey, mainItem.itemIndex); }
+                    if (saveSelected) { PlayerPrefs.SetInt("Dropdown_" + saveKey, mainItem.itemIndex); }
                 });
             }
 
-            if (selectedImage != null && enableIcon == false) { selectedImage.gameObject.SetActive(false); }
+            if (selectedImage != null && !enableIcon) { selectedImage.gameObject.SetActive(false); }
             else if (selectedImage != null) { selectedImage.sprite = items[selectedItemIndex].itemIcon; }
             if (selectedText != null) { selectedText.text = items[selectedItemIndex].itemName; onItemTextChanged?.Invoke(selectedText); }
           
-            if (saveSelected == true)
+            if (saveSelected)
             {
-                if (invokeAtStart == true) { items[PlayerPrefs.GetInt("Dropdown_" + saveKey)].OnItemSelection.Invoke(); }
-                else { SetDropdownIndex(PlayerPrefs.GetInt("Dropdown_" + saveKey)); }
+                if (invokeAtStart) { items[PlayerPrefs.GetInt("Dropdown_" + saveKey)].OnItemSelection.Invoke(); }
+                else { SetDropdownIndex(PlayerPrefs.GetInt("Dropdown_" + saveKey), false); }
             }
-            else if (invokeAtStart == true) { items[selectedItemIndex].OnItemSelection.Invoke(); }
+            else if (invokeAtStart) { items[selectedItemIndex].OnItemSelection.Invoke(); }
         }
 
         // Obsolete
@@ -201,17 +201,22 @@ namespace Michsky.MUIP
 
         public void SetDropdownIndex(int itemIndex)
         {
-            if (selectedImage != null && enableIcon == true && items[itemIndex].itemIcon != null) { selectedImage.gameObject.SetActive(true); selectedImage.sprite = items[itemIndex].itemIcon; }
-            else if (selectedImage != null && enableIcon == true && items[itemIndex].itemIcon == null) { selectedImage.gameObject.SetActive(false); }
+            SetDropdownIndex(itemIndex, true);
+        }
+
+        public void SetDropdownIndex(int itemIndex, bool bypassSound = false)
+        {
+            if (selectedImage != null && enableIcon && items[itemIndex].itemIcon != null) { selectedImage.gameObject.SetActive(true); selectedImage.sprite = items[itemIndex].itemIcon; }
+            else if (selectedImage != null && enableIcon && items[itemIndex].itemIcon == null) { selectedImage.gameObject.SetActive(false); }
             if (selectedText != null) { selectedText.text = items[itemIndex].itemName; onItemTextChanged?.Invoke(selectedText); }
-            if (enableDropdownSounds == true && useClickSound == true) { soundSource.PlayOneShot(clickSound); }
+            if (!bypassSound && enableDropdownSounds && useClickSound) { soundSource.PlayOneShot(clickSound); }
 
             selectedItemIndex = itemIndex;
         }
 
         public void Animate()
         {
-            if (isOn == false && animationType == AnimationType.Modular)
+            if (!isOn && animationType == AnimationType.Modular)
             {
                 isOn = true;
                 listCG.blocksRaycasts = true;
@@ -223,7 +228,7 @@ namespace Michsky.MUIP
                 StartCoroutine("StartExpand");
             }
 
-            else if (isOn == true && animationType == AnimationType.Modular)
+            else if (isOn && animationType == AnimationType.Modular)
             {
                 isOn = false;
                 listCG.blocksRaycasts = false;
@@ -234,21 +239,21 @@ namespace Michsky.MUIP
                 StartCoroutine("StartMinimize");
             }
 
-            else if (isOn == false && animationType == AnimationType.Custom)
-            {
+            else if (!isOn && animationType == AnimationType.Custom)
+            {   
                 dropdownAnimator.Play("Stylish In");
                 isOn = true;
             }
 
-            else if (isOn == true && animationType == AnimationType.Custom)
+            else if (isOn && animationType == AnimationType.Custom)
             {
                 dropdownAnimator.Play("Stylish Out");
                 isOn = false;
             }
 
-            if (enableTrigger == true && isOn == false) { triggerObject.SetActive(false); }
-            else if (enableTrigger == true && isOn == true) { triggerObject.SetActive(true); }
-            if (enableTrigger == true && outOnPointerExit == true) { triggerObject.SetActive(false); }
+            if (enableTrigger && !isOn) { triggerObject.SetActive(false); }
+            else if (enableTrigger && isOn) { triggerObject.SetActive(true); }
+            if (enableTrigger && outOnPointerExit) { triggerObject.SetActive(false); }
         }
 
         public void Interactable(bool value)
@@ -258,23 +263,27 @@ namespace Michsky.MUIP
 
         public void CreateNewItem(string title, Sprite icon, bool notify = false)
         {
-            Item item = new Item();
-            item.itemName = title;
-            item.itemIcon = icon;
+            Item item = new Item
+            {
+                itemName = title,
+                itemIcon = icon
+            };
             items.Add(item);
 
             if (selectedItemIndex > items.Count) { selectedItemIndex = 0; }
-            if (notify == true) { SetupDropdown(); }
+            if (notify) { SetupDropdown(); }
         }
 
         public void CreateNewItem(string title, bool notify = false)
         {
-            Item item = new Item();
-            item.itemName = title;
+            Item item = new Item
+            {
+                itemName = title
+            };
             items.Add(item);
 
             if (selectedItemIndex > items.Count) { selectedItemIndex = 0; }
-            if (notify == true) { SetupDropdown(); }
+            if (notify) { SetupDropdown(); }
         }
 
         public void RemoveItem(string itemTitle, bool notify = false)
@@ -283,7 +292,7 @@ namespace Michsky.MUIP
             items.Remove(item);
 
             if (selectedItemIndex > items.Count) { selectedItemIndex = 0; }
-            if (notify == true) { SetupDropdown(); }
+            if (notify) { SetupDropdown(); }
         }
 
         public void UpdateItemLayout()
@@ -300,28 +309,28 @@ namespace Michsky.MUIP
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            if (isInteractable == false) { return; }
-            if (enableDropdownSounds == true && useClickSound == true) { soundSource.PlayOneShot(clickSound); }
+            if (!isInteractable) { return; }
+            if (enableDropdownSounds && useClickSound) { soundSource.PlayOneShot(clickSound); }
             
             Animate();
         }
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            if (isInteractable == false) { return; }
-            if (enableDropdownSounds == true && useHoverSound == true) { soundSource.PlayOneShot(hoverSound); }
+            if (!isInteractable) { return; }
+            if (enableDropdownSounds && useHoverSound) { soundSource.PlayOneShot(hoverSound); }
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            if (isInteractable == false) { return; }
-            if (outOnPointerExit == true && isOn == true) { Animate(); isOn = false; }
+            if (!isInteractable) { return; }
+            if (outOnPointerExit && isOn) { Animate(); isOn = false; }
         }
 
         public void OnSubmit(BaseEventData eventData)
         {
-            if (isInteractable == false) { return; }
-            if (enableDropdownSounds == true && useClickSound == true) { soundSource.PlayOneShot(clickSound); }
+            if (!isInteractable) { return; }
+            if (enableDropdownSounds && useClickSound) { soundSource.PlayOneShot(clickSound); }
 
             Animate();
         }
@@ -329,6 +338,7 @@ namespace Michsky.MUIP
         IEnumerator StartExpand()
         {
             float elapsedTime = 0;
+
             Vector2 startPos = listRect.sizeDelta;
             Vector2 endPos = new Vector2(listRect.sizeDelta.x, panelSize);
 
@@ -348,6 +358,7 @@ namespace Michsky.MUIP
         IEnumerator StartMinimize()
         {
             float elapsedTime = 0;
+
             Vector2 startPos = listRect.sizeDelta;
             Vector2 endPos = new Vector2(listRect.sizeDelta.x, 0);
 

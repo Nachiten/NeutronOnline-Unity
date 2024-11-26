@@ -66,7 +66,7 @@ public struct GridPosition : IEquatable<GridPosition>, INetworkSerializable
         return new GridPosition(a.x - b.x, a.y - b.y);
     }
     
-    public static GridPosition Null => new(-500, -500);
+    public static GridPosition Null => new(int.MinValue, int.MinValue);
     
     public static bool operator true(GridPosition gridPosition)
     {

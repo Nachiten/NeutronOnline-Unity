@@ -6,7 +6,7 @@ public class LevelGrid : Singleton<LevelGrid>
 {
     public Action<GridElement, GridPosition, GridPosition> OnAnyGridElementMovedGridPosition;
 
-    [SerializeField] private bool showDebugObjects;
+    private bool showDebugObjects = false;
     
     [SerializeField] private Transform gridDebugObjectPrefab;
     [SerializeField] private Transform gridDebugObjectParent;

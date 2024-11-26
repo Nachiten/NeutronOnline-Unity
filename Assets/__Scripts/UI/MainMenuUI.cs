@@ -1,17 +1,24 @@
+using Michsky.MUIP;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class MainMenuUI : MonoBehaviour
 {
-    [SerializeField] private Button startButton;
+    [SerializeField] private ButtonManager startButton;
+    [SerializeField] private ButtonManager quitButton;
     
     private void Start()
     {
         startButton.onClick.AddListener(StartGame);
+        quitButton.onClick.AddListener(QuitGame);
     }
 
     private void StartGame()
     {
         SceneLoader.LoadScene(SceneName._1_LobbySelect);
+    }
+    
+    private void QuitGame()
+    {
+        Application.Quit();
     }
 }

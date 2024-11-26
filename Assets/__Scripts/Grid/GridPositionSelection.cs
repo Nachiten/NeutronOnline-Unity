@@ -65,6 +65,9 @@ public class GridPositionSelection : MonoBehaviour
     
     private void UnhoverPosition()
     {
+        if (!hoveredGridPosition)
+            return;
+        
         OnGridPositionUnhovered?.Invoke(hoveredGridPosition);
         hoveredGridPosition = GridPosition.Null;
     }

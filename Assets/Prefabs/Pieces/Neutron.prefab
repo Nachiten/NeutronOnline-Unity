@@ -24,6 +24,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Neutron
       objectReference: {fileID: 0}
+    - target: {fileID: 3990931565990141652, guid: 69010fba7251ff3439b5287e9d0d4ab6, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 1317837815
+      objectReference: {fileID: 0}
     - target: {fileID: 8434963928437593627, guid: 69010fba7251ff3439b5287e9d0d4ab6, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -93,4 +97,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a72b1e7f93d5a7489f5e7f7f900f0b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   moveSpeed: 20

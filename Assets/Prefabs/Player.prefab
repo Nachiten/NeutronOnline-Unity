@@ -321,6 +321,8 @@ MonoBehaviour:
   SpawnWithObservers: 1
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!114 &7850283095798038923
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -333,3 +335,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 598151e01c878644c8c0212ed2e87e9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1

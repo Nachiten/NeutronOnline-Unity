@@ -26,7 +26,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3990931565990141652, guid: 69010fba7251ff3439b5287e9d0d4ab6, type: 3}
       propertyPath: GlobalObjectIdHash
-      value: 775081323
+      value: 57912195
       objectReference: {fileID: 0}
     - target: {fileID: 8434963928437593627, guid: 69010fba7251ff3439b5287e9d0d4ab6, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -97,5 +97,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 638f540bedc72e6458aba0d73cacf436, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   moveSpeed: 20
   playerIndex: -1

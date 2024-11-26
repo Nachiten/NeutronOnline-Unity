@@ -4,14 +4,22 @@ using UnityEngine.UI;
 
 public class GamePlayerInfoUI : MonoBehaviour
 {
-    [SerializeField] private TMP_Text playerNameText;
-    [SerializeField] private Image playerNameColor;
+    [SerializeField] private TMP_Text localPlayerNameText;
+    [SerializeField] private Image localPlayerColor;
+    
+    [SerializeField] private TMP_Text otherPlayerNameText;
+    [SerializeField] private Image otherPlayerColor;
 
     private void Start()
     {
         PlayerData playerData = PlayerDataHandler.Instance.GetLocalPlayerData();
         
-        playerNameText.text = playerData.name.ToString();
-        playerNameColor.color = PlayerAttributes.Instance.GetColorFromColorId(playerData.colorId);
+        localPlayerNameText.text = playerData.name.ToString();
+        localPlayerColor.color = PlayerAttributes.Instance.GetColorFromColorId(playerData.colorId);
+        
+        PlayerData otherPlayerData = PlayerDataHandler.Instance.GetOtherPlayerData();
+        
+        otherPlayerNameText.text = otherPlayerData.name.ToString();
+        otherPlayerColor.color = PlayerAttributes.Instance.GetColorFromColorId(otherPlayerData.colorId);
     }
 }
