@@ -8,6 +8,8 @@ public class PlayerReady : SingletonNetwork<PlayerReady>
 {
     public event Action<bool> OnEveryPlayerReadyChanged;
     public event Action OnReadyChanged;
+    public event Action OnSecondPlayerJoined;
+    public event Action OnSecondPlayerLeft;
 
     private Dictionary<ulong, bool> playersReady;
     private bool everyPlayerReady;
@@ -47,11 +49,16 @@ public class PlayerReady : SingletonNetwork<PlayerReady>
         if (clientId == networkManager.LocalClientId)
             return;
         
+        OnSecondPlayerLeft?.Invoke();
+        
         UpdatePlayerReadyClientRpc();
     }
 
     private void OnClientConnectedCallback(ulong clientId)
     {
+        if (IsServer)
+            OnSecondPlayerJoined?.Invoke();
+        
         UpdatePlayerReadyClientRpc();
     }
 

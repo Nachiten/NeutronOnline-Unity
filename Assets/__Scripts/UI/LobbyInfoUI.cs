@@ -40,6 +40,22 @@ public class LobbyInfoUI : MonoBehaviour
         lobbyCodeText.text = "Lobby Code: " + lobby.LobbyCode;
 
         isHost = networkManager.IsHost;
+        
+        if (isHost)
+            readyButton.enabled = false;
+        
+        playerReady.OnSecondPlayerJoined += OnSecondPlayerJoined;
+        playerReady.OnSecondPlayerLeft += OnSecondPlayerLeft;
+    }
+
+    private void OnSecondPlayerJoined()
+    {
+        readyButton.enabled = true;
+    }
+    
+    private void OnSecondPlayerLeft()
+    {
+        readyButton.enabled = false;
     }
 
     private void OnDestroy()

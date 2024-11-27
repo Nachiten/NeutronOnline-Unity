@@ -96,10 +96,12 @@ public class PlayerActions : SingletonNetwork<PlayerActions>
     {
         Debug.Log("OnClientDisconnectCallback: " + clientId + " | IsServer: " + networkManager.IsServer, this);
 
+        // Server removing a client
         if (networkManager.IsServer)
         {
             playerDataHandler.RemovePlayerData(clientId);
         }
+        // Client disconnecting from server
         else
         {
             // ??? TODO - Review
