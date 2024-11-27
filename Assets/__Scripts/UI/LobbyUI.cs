@@ -17,7 +17,7 @@ public class LobbyUI : MonoBehaviour
     [SerializeField] private Transform lobbyContainer;
     [SerializeField] private Transform lobbyTemplate;
     
-    private bool selectFirstButton;
+    //private bool selectFirstButton;
     
     // Dependencies
     private PlayerAttributes playerAttributes;
@@ -48,14 +48,14 @@ public class LobbyUI : MonoBehaviour
         UpdateLobbyList(new List<Lobby>());
     }
     
-    private void LateUpdate()
-    {
-        if (!selectFirstButton)
-            return;
-
-        selectFirstButton = false;
-        SelectFirstButton();
-    }
+    // private void LateUpdate()
+    // {
+    //     if (!selectFirstButton)
+    //         return;
+    //
+    //     selectFirstButton = false;
+    //     SelectFirstButton();
+    // }
     
     private void OnDestroy()
     {
@@ -119,11 +119,11 @@ public class LobbyUI : MonoBehaviour
         }
     }
     
-    private void OnApplicationFocus(bool hasFocus)
-    {
-        if (hasFocus)
-            selectFirstButton = true;
-    }
+    // private void OnApplicationFocus(bool hasFocus)
+    // {
+    //     if (hasFocus)
+    //         selectFirstButton = true;
+    // }
 
     private void SelectFirstButton()
     {
