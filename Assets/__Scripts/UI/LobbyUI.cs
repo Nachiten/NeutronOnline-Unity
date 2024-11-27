@@ -1,23 +1,21 @@
 using System.Collections.Generic;
+using Michsky.MUIP;
 using TMPro;
 using Unity.Netcode;
 using Unity.Services.Lobbies.Models;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class LobbyUI : MonoBehaviour
 {
-    [SerializeField] private Button mainMenuButton;
-    [SerializeField] private Button createLobbyButton;
-    [SerializeField] private Button quickJoinButton;
-    [SerializeField] private Button joinWithCodeButton;
+    [SerializeField] private ButtonManager mainMenuButton;
+    [SerializeField] private ButtonManager createLobbyButton;
+    [SerializeField] private ButtonManager quickJoinButton;
+    [SerializeField] private ButtonManager joinWithCodeButton;
     [SerializeField] private TMP_InputField joinCodeInputField;
     [SerializeField] private TMP_InputField playerNameInputField;
     [SerializeField] private LobbyCreateUI lobbyCreateUI;
-    [SerializeField] private Transform lobbyContainer;
-    [SerializeField] private Transform lobbyTemplate;
-    
-    //private bool selectFirstButton;
+    [SerializeField] private Transform lobbyListContainer;
+    [SerializeField] private Transform lobbyItemTemplate;
     
     // Dependencies
     private PlayerAttributes playerAttributes;
@@ -31,8 +29,7 @@ public class LobbyUI : MonoBehaviour
         quickJoinButton.onClick.AddListener(OnQuickJoinClick);
         joinWithCodeButton.onClick.AddListener(OnJoinWithCodeClick);
         
-        lobbyTemplate.gameObject.SetActive(false);
-        SelectFirstButton();
+        lobbyItemTemplate.gameObject.SetActive(false);
     }
 
     private void Start()
@@ -40,22 +37,16 @@ public class LobbyUI : MonoBehaviour
         playerAttributes = PlayerAttributes.Instance;
         lobbyHandler = LobbyHandler.Instance;
         networkManager = NetworkManager.Singleton;
-        
+
         playerNameInputField.text = playerAttributes.GetLocalPlayerName();
         playerNameInputField.onValueChanged.AddListener(OnPlayerNameChanged);
+        
+        CustomInputField playerNameInputFieldModernUI = playerNameInputField.GetComponent<CustomInputField>();
+        playerNameInputFieldModernUI.UpdateStateInstant();
         
         lobbyHandler.OnLobbyListChanged += OnLobbyListChanged;
         UpdateLobbyList(new List<Lobby>());
     }
-    
-    // private void LateUpdate()
-    // {
-    //     if (!selectFirstButton)
-    //         return;
-    //
-    //     selectFirstButton = false;
-    //     SelectFirstButton();
-    // }
     
     private void OnDestroy()
     {
@@ -101,9 +92,9 @@ public class LobbyUI : MonoBehaviour
     private void UpdateLobbyList(List<Lobby> lobbyList)
     {
         // Remove all existing lobby buttons
-        foreach (Transform child in lobbyContainer)
+        foreach (Transform child in lobbyListContainer)
         {
-            if (child == lobbyTemplate) 
+            if (child == lobbyItemTemplate) 
                 continue;
             
             Destroy(child.gameObject);
@@ -112,21 +103,10 @@ public class LobbyUI : MonoBehaviour
         // Add a button for each lobby
         foreach (Lobby lobby in lobbyList)
         {
-            Transform lobbyButtonTransform = Instantiate(lobbyTemplate, lobbyContainer);
+            Transform lobbyButtonTransform = Instantiate(lobbyItemTemplate, lobbyListContainer);
             lobbyButtonTransform.gameObject.SetActive(true);
             
             lobbyButtonTransform.GetComponent<LobbyListSingleUI>().SetLobby(lobby);
         }
-    }
-    
-    // private void OnApplicationFocus(bool hasFocus)
-    // {
-    //     if (hasFocus)
-    //         selectFirstButton = true;
-    // }
-
-    private void SelectFirstButton()
-    {
-        createLobbyButton.Select();
     }
 }

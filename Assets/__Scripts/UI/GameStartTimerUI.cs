@@ -6,9 +6,9 @@ public class GameStartTimerUI : MonoBehaviour
 {
     public static event Action OnGameStartTimerFinished;
 
-    [SerializeField] private float gameStartTimerMax = 1f;
     [SerializeField] private TMP_Text gameStartTimerText;
-
+    
+    private const float gameStartTimerMax = 3f;
     private readonly Timer gameStartTimer = new(0, true, false);
     private bool timerRunning;
     

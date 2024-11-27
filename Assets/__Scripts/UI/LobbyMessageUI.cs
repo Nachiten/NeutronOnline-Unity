@@ -1,12 +1,12 @@
+using Michsky.MUIP;
 using TMPro;
 using Unity.Netcode;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class LobbyMessageUI : MonoBehaviour
 {
     [SerializeField] private TMP_Text messageText;
-    [SerializeField] private Button closeButton;
+    [SerializeField] private ButtonManager closeButton;
 
     // Dependencies
     private LobbyHandler lobbyHandler;

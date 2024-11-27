@@ -60,4 +60,9 @@ public static class SceneLoader
             SceneName._4_Game,
         };
     }
+
+    public static SceneName GetCurrentScene()
+    {
+        return (SceneName)SceneManager.GetActiveScene().buildIndex;
+    }
 }

@@ -145,6 +145,14 @@ public class PlayerReady : SingletonNetwork<PlayerReady>
     {
         if (networkManager == null)
             return false;
+
+        // If there is only one player, reset player ready
+        if (networkManager.ConnectedClientsIds.Count < 2)
+        {
+            if (IsLocalPlayerReady())
+                SetLocalPlayerReady(false);
+            return false;
+        }
         
         return networkManager.ConnectedClientsIds
             .All(clientId => playersReady.ContainsKey(clientId) && playersReady[clientId]);

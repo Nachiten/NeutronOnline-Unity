@@ -1,3 +1,4 @@
+using Michsky.MUIP;
 using TMPro;
 using Unity.Netcode;
 using Unity.Services.Lobbies.Models;
@@ -6,11 +7,10 @@ using UnityEngine.UI;
 
 public class LobbyInfoUI : MonoBehaviour
 {
-    [SerializeField] private Button mainMenuButton;
-    [SerializeField] private Button readyButton;
+    [SerializeField] private ButtonManager mainMenuButton;
+    [SerializeField] private ButtonManager readyButton;
     [SerializeField] private TMP_Text lobbyNameText;
     [SerializeField] private TMP_Text lobbyCodeText;
-    [SerializeField] private TMP_Text readyButtonText;
 
     private bool localPlayerReady;
     private bool isHost;
@@ -25,6 +25,8 @@ public class LobbyInfoUI : MonoBehaviour
     {
         mainMenuButton.onClick.AddListener(OnMainMenuButtonClicked);
         readyButton.onClick.AddListener(OnReadyButtonClicked);
+        
+        playerReady = PlayerReady.Instance;
     }
 
     private void Start()
@@ -42,7 +44,7 @@ public class LobbyInfoUI : MonoBehaviour
         isHost = networkManager.IsHost;
         
         if (isHost)
-            readyButton.enabled = false;
+            readyButton.Interactable(false);
         
         playerReady.OnSecondPlayerJoined += OnSecondPlayerJoined;
         playerReady.OnSecondPlayerLeft += OnSecondPlayerLeft;
@@ -50,12 +52,15 @@ public class LobbyInfoUI : MonoBehaviour
 
     private void OnSecondPlayerJoined()
     {
-        readyButton.enabled = true;
+        readyButton.Interactable(true);
+        UpdateReadyButtonText();
     }
     
     private void OnSecondPlayerLeft()
     {
-        readyButton.enabled = false;
+        localPlayerReady = false;
+        readyButton.Interactable(false);
+        UpdateReadyButtonText();
     }
 
     private void OnDestroy()
@@ -84,6 +89,7 @@ public class LobbyInfoUI : MonoBehaviour
 
     private void UpdateReadyButtonText()
     {
-        readyButtonText.text = localPlayerReady ? "NOT READY" : "READY";
+        readyButton.SetText(localPlayerReady ? "NOT READY" : "READY");
+        readyButton.UpdateUI();
     }
 }

@@ -1,12 +1,11 @@
-using System;
-using TMPro;
+using Michsky.MUIP;
 using Unity.Services.Lobbies.Models;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class LobbyListSingleUI : MonoBehaviour
 {
-    [SerializeField] private TMP_Text lobbyNameText;
+    [SerializeField] private ButtonManager lobbyNameButton;
     
     private Lobby lobby;
 
@@ -26,7 +25,7 @@ public class LobbyListSingleUI : MonoBehaviour
     public void SetLobby(Lobby _lobby)
     { 
         lobby = _lobby;
-        lobbyNameText.text = lobby.Name;
+        lobbyNameButton.SetText(lobby.Name);
     }
     
     private void OnLobbyJoinClick()

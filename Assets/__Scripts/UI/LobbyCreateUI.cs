@@ -1,3 +1,4 @@
+using Michsky.MUIP;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,8 +7,8 @@ using Random = UnityEngine.Random;
 public class LobbyCreateUI : MonoBehaviour
 {
     [SerializeField] private Button closeButton;
-    [SerializeField] private Button createPublicButton;
-    [SerializeField] private Button createPrivateButton;
+    [SerializeField] private ButtonManager createPublicButton;
+    [SerializeField] private ButtonManager createPrivateButton;
     [SerializeField] private TMP_InputField lobbyNameInputField;
 
     // Dependencies
@@ -55,7 +56,6 @@ public class LobbyCreateUI : MonoBehaviour
     
     public void SetShow(bool show)
     {
-        createPublicButton.Select();
         gameObject.SetActive(show);
     }
 }
