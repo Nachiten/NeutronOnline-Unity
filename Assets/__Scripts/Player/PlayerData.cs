@@ -7,7 +7,7 @@ public struct PlayerData: IEquatable<PlayerData>, INetworkSerializable
     public ulong clientId;
     public ushort colorId;
     
-    public FixedString64Bytes name;
+    public FixedString128Bytes name;
     public FixedString64Bytes playerId;
     
     public PlayerData(ulong clientId, string name, ushort colorId, string playerId)

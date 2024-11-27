@@ -61,13 +61,15 @@ public class LobbyUI : MonoBehaviour
     
     private void OnPlayerNameChanged(string newText)
     {
+        newText = newText.Trim();
+        
         // Max 30 characters
         if (newText.Length > 30)
         {
             newText = newText.Substring(0, 30);
-            playerNameInputField.text = newText;
         }
         
+        playerNameInputField.text = newText;
         playerAttributes.SetLocalPlayerName(newText);
     }
 

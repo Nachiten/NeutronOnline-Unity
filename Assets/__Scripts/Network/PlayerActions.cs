@@ -116,7 +116,7 @@ public class PlayerActions : SingletonNetwork<PlayerActions>
         PlayerData _playerData = playerDataHandler.GetPlayerDataFromClientId(rpcParams.Receive.SenderClientId);
         
         playerName = playerAttributes.UpdateNameIfNotAvailable(playerName);
-        _playerData.name = (FixedString64Bytes)playerName;
+        _playerData.name = playerName;
         
         playerDataHandler.UpdatePlayerData(playerDataIndex, _playerData);
     }
@@ -139,7 +139,7 @@ public class PlayerActions : SingletonNetwork<PlayerActions>
         int playerDataIndex = playerDataHandler.GetPlayerDataIndexFromClientId(rpcParams.Receive.SenderClientId);
         PlayerData _playerData = playerDataHandler.GetPlayerDataFromClientId(rpcParams.Receive.SenderClientId);
         
-        _playerData.playerId = (FixedString64Bytes) playerId;
+        _playerData.playerId = playerId;
         
         playerDataHandler.UpdatePlayerData(playerDataIndex, _playerData);
     }

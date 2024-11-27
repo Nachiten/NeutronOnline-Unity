@@ -10,6 +10,7 @@ using Random = UnityEngine.Random;
 public class PlayerAttributes : Singleton<PlayerAttributes>
 {
     private const string PLAYER_PREFS_PLAYER_NAME = "playerName";
+    private string defaultPlayerName;
     
     [SerializeField] private List<Color> playerColors;
     
@@ -27,7 +28,7 @@ public class PlayerAttributes : Singleton<PlayerAttributes>
         
         DontDestroyOnLoad(gameObject);
 
-        string defaultPlayerName = "PlayerName" + Random.Range(1000, 10000);
+        defaultPlayerName = "PlayerName" + Random.Range(1000, 10000);
         
         localPlayerName = PlayerPrefs.GetString(PLAYER_PREFS_PLAYER_NAME, defaultPlayerName);
         localPlayerColorId = 0;
@@ -112,6 +113,9 @@ public class PlayerAttributes : Singleton<PlayerAttributes>
     
     public string GetLocalPlayerName()
     {
+        if (localPlayerName == "")
+            SetLocalPlayerName(defaultPlayerName);
+        
         return localPlayerName;
     }
     
@@ -125,9 +129,9 @@ public class PlayerAttributes : Singleton<PlayerAttributes>
         return playerColors[colorId];
     }
 
-    public void SetLocalPlayerName(string newText)
+    public void SetLocalPlayerName(string newLocalPlayerName)
     {
-        localPlayerName = newText;
+        localPlayerName = newLocalPlayerName;
         PlayerPrefs.SetString(PLAYER_PREFS_PLAYER_NAME, localPlayerName);
     }
 }
