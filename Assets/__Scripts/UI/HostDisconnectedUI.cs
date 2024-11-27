@@ -1,11 +1,11 @@
+using Michsky.MUIP;
 using TMPro;
 using Unity.Netcode;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class HostDisconnectedUI : MonoBehaviour
 {
-    [SerializeField] private Button playAgainButton;
+    [SerializeField] private ButtonManager mainMenuButton;
     [SerializeField] private TMP_Text disconnectReasonText;
 
     // Dependencies
@@ -13,7 +13,7 @@ public class HostDisconnectedUI : MonoBehaviour
     
     private void Awake()
     {
-        playAgainButton.onClick.AddListener(OnPlayAgainButtonClicked);
+        mainMenuButton.onClick.AddListener(OnPlayAgainButtonClicked);
     }
 
     private void Start()

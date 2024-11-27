@@ -49,8 +49,6 @@ public class TurnSystem : NetworkBehaviour
     [Rpc(SendTo.Everyone)]
     private void OnMoveStartedClientRpc()
     {
-        Debug.Log("OnMoveStartedClientRpc");
-        
         switch (state)
         {
             case State.MovingNeutron:
@@ -74,8 +72,6 @@ public class TurnSystem : NetworkBehaviour
     [Rpc(SendTo.Everyone)]
     private void OnMoveEndedClientRpc()
     {
-        Debug.Log("OnMoveEndedClientRpc");
-        
         if (nextState == State.MovingNeutron)
         {
             StartNextTurn();

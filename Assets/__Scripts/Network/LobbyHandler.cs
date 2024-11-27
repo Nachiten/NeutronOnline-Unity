@@ -378,7 +378,7 @@ public class LobbyHandler : Singleton<LobbyHandler>
     {
         if (NetworkManager.Singleton.IsServer)
         {
-            Debug.Log("STARTING GAME!!!");
+            Debug.Log("[Host] Starting Game!");
             SceneLoader.LoadNetworkScene(SceneName._4_Game);
         }
     }

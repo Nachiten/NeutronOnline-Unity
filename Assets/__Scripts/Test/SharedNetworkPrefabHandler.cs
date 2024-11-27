@@ -10,7 +10,6 @@ public class SharedNetworkPrefabHandler : SingletonNetwork<SharedNetworkPrefabHa
     
     public override void OnNetworkSpawn()
     {
-        Debug.Log("SharedNetworkPrefabHandler OnNetworkSpawn");
         // Instantiate in network the prefab
 
         if (IsServer)

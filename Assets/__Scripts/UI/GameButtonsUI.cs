@@ -1,7 +1,6 @@
 using Michsky.MUIP;
 using Unity.Netcode;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class GameButtonsUI : MonoBehaviour
 {
@@ -11,14 +10,14 @@ public class GameButtonsUI : MonoBehaviour
     private void Awake()
     {
         mainMenuButton.onClick.AddListener(OnMainMenuButtonClicked);
-        //restartGameButton.onClick.AddListener(OnRestartGameButtonClicked);
+        restartGameButton.onClick.AddListener(OnRestartGameButtonClicked);
     }
 
     private void Start()
     {
         if (!NetworkManager.Singleton.IsHost)
         {
-            //restartGameButton.gameObject.SetActive(false);
+            restartGameButton.gameObject.SetActive(false);
         }
     }
 

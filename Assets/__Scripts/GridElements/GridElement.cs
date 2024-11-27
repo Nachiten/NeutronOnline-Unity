@@ -46,8 +46,6 @@ public abstract class GridElement : NetworkBehaviour
     [Rpc(SendTo.Everyone)]
     private void FinishPieceMovementClientRpc(GridPosition previousGridPos, GridPosition targetGridPos)
     {
-        Debug.Log($"FinishPieceMovementClientRpc: {previousGridPos} -> {targetGridPos}");
-        
         currentGridPosition = targetGridPos;
         
         LevelGrid.Instance.MoveGridElementGridPos(this, previousGridPos, targetGridPos);
