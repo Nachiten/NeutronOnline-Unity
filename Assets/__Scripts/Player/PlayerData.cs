@@ -6,7 +6,6 @@ public struct PlayerData: IEquatable<PlayerData>, INetworkSerializable
 {
     public ulong clientId;
     public ushort colorId;
-    
     public FixedString128Bytes name;
     public FixedString64Bytes playerId;
     
@@ -36,6 +35,6 @@ public struct PlayerData: IEquatable<PlayerData>, INetworkSerializable
     
     public override string ToString()
     {
-        return $"clientId: {clientId}, playerName: {name}, colorId: {colorId}";
+        return $"clientId: {clientId}, colorId: {colorId}, name: {name}, playerId: {playerId}";
     }
 }

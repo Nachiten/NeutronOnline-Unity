@@ -50,6 +50,13 @@ public class WinManager : MonoBehaviour
     
     private void PlayerWins(int playerIndex)
     {
+        Time.timeScale = 0;
+        
         OnPlayerWon?.Invoke(playerIndex);
+    }
+
+    private void OnDestroy()
+    {
+        Time.timeScale = 1;
     }
 }

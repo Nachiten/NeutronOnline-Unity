@@ -104,6 +104,8 @@ public class PlayerDataHandler : SingletonNetwork<PlayerDataHandler>
     public void UpdatePlayerData(int playerDataIndex, PlayerData newPlayerData)
     {
         playerData[playerDataIndex] = newPlayerData;
+        
+        PrintPlayerData();
     }
 
     public List<PlayerData> GetAllPlayerData()

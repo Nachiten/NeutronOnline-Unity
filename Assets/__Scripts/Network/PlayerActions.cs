@@ -67,16 +67,20 @@ public class PlayerActions : SingletonNetwork<PlayerActions>
     
     private void OnClientConnectedCallback(ulong clientId)
     {
-        Debug.Log("OnClientConnectedCallback: " + clientId + " | IsServer: " + networkManager.IsServer, this);
+        //Debug.Log("OnClientConnectedCallback: " + clientId + " | IsServer: " + networkManager.IsServer, this);
 
         // Server receiving a new client
         if (networkManager.IsServer)
         {
+            Debug.Log($"Server received a new client: ID: {clientId} | Name: {playerAttributes.GetLocalPlayerName()}", this);
+            
             playerDataHandler.AddPlayerData(clientId, "", 0, "");
             
             // Host is connecting to server
             if (clientId == 0)
             {
+                SetPlayerIdServerRpc(authenticationService.PlayerId);
+                
                 SetPlayerNameServerRpc(playerAttributes.GetLocalPlayerName());
                 SetPlayerColorServerRpc(playerAttributes.GetLocalPlayerColorId());
             }
@@ -84,6 +88,8 @@ public class PlayerActions : SingletonNetwork<PlayerActions>
         // Client connecting to server
         else
         {
+            Debug.Log($"Client connected to server: ID: {clientId} | Name: {playerAttributes.GetLocalPlayerName()} | Auth ID: {authenticationService.PlayerId}", this);
+            
             playerAttributes.SetLocalClientId(clientId);
             SetPlayerIdServerRpc(authenticationService.PlayerId);
             
@@ -95,16 +101,20 @@ public class PlayerActions : SingletonNetwork<PlayerActions>
     
     private void OnClientDisconnectCallback(ulong clientId)
     {
-        Debug.Log("OnClientDisconnectCallback: " + clientId + " | IsServer: " + networkManager.IsServer, this);
+        //Debug.Log("OnClientDisconnectCallback: " + clientId + " | IsServer: " + networkManager.IsServer, this);
 
         // Server removing a client
         if (networkManager.IsServer)
         {
+            Debug.Log($"Server removed a client: ID: {clientId} | Name: {playerDataHandler.GetPlayerDataFromClientId(clientId).name}", this);
+            
             playerDataHandler.RemovePlayerData(clientId);
         }
         // Client disconnecting from server
         else
         {
+            Debug.Log($"Client disconnected from server: ID: {clientId} | Name: {playerDataHandler.GetPlayerDataFromClientId(clientId).name}", this);
+            
             // ??? TODO - Review
             OnFailedToJoinGame?.Invoke();
         }
