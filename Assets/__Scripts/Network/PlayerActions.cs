@@ -74,6 +74,7 @@ public class PlayerActions : SingletonNetwork<PlayerActions>
         {
             playerDataHandler.AddPlayerData(clientId, "", 0, "");
             
+            // Host is connecting to server
             if (clientId == 0)
             {
                 SetPlayerNameServerRpc(playerAttributes.GetLocalPlayerName());
