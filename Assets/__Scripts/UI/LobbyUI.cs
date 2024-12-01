@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Michsky.MUIP;
 using TMPro;
 using Unity.Netcode;
@@ -40,6 +41,7 @@ public class LobbyUI : MonoBehaviour
 
         playerNameInputField.text = playerAttributes.GetLocalPlayerName();
         playerNameInputField.onValueChanged.AddListener(OnPlayerNameChanged);
+        joinCodeInputField.onValueChanged.AddListener(OnJoinCodeChanged);
         
         CustomInputField playerNameInputFieldModernUI = playerNameInputField.GetComponent<CustomInputField>();
         playerNameInputFieldModernUI.UpdateStateInstant();
@@ -47,7 +49,17 @@ public class LobbyUI : MonoBehaviour
         lobbyHandler.OnLobbyListChanged += OnLobbyListChanged;
         UpdateLobbyList(new List<Lobby>());
     }
-    
+
+    private void OnJoinCodeChanged(string newText)
+    {
+        newText = newText.Trim().ToUpper();
+        
+        if (newText.Length > 6)
+            newText = newText.Substring(0, 6);
+        
+        joinCodeInputField.text = newText;
+    }
+
     private void OnDestroy()
     {
         if (lobbyHandler != null)
@@ -98,8 +110,15 @@ public class LobbyUI : MonoBehaviour
         lobbyHandler.JoinWithCode(joinCodeInputField.text);
     }
 
+    private List<Lobby> previousLobbyList = new();
+    
     private void UpdateLobbyList(List<Lobby> lobbyList)
     {
+        if (ListsAreIdentical(previousLobbyList, lobbyList))
+            return;
+        
+        previousLobbyList = lobbyList;
+        
         // Remove all existing lobby buttons
         foreach (Transform child in lobbyListContainer)
         {
@@ -117,5 +136,14 @@ public class LobbyUI : MonoBehaviour
             
             lobbyButtonTransform.GetComponent<LobbyListSingleUI>().SetLobby(lobby);
         }
+    }
+    
+    private bool ListsAreIdentical(List<Lobby> list1, List<Lobby> list2)
+    {
+        if (list1.Count != list2.Count)
+            return false;
+     
+        // Check if lists are identical by LobbyCode
+        return !list1.Where((t, i) => t.LobbyCode != list2[i].LobbyCode).Any();
     }
 }

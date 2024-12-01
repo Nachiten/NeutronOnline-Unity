@@ -10,6 +10,13 @@ public class Logger : MonoBehaviour
     {
         LevelGrid.Instance.OnAnyGridElementMovedGridPosition += LogPieceMovement;
         winManager.OnPlayerWon += LogPlayerWon;
+        
+        LogGameStarted();
+    }
+
+    private void LogGameStarted()
+    {
+        Debug.Log("Game started!");
     }
 
     private void LogPieceMovement(GridElement gridElement, GridPosition previousGridPos, GridPosition targetGridPos)

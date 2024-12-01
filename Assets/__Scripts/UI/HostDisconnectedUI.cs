@@ -54,7 +54,7 @@ public class HostDisconnectedUI : MonoBehaviour
 
     private void OnDestroy()
     {
-        if (networkManager == null || networkManager.IsServer)
+        if (networkManager == null)
             return;
         
         if (networkManager.IsServer)

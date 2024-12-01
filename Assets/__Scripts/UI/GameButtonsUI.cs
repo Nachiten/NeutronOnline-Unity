@@ -23,6 +23,7 @@ public class GameButtonsUI : MonoBehaviour
 
     private void OnRestartGameButtonClicked()
     {
+        Debug.Log("[Host] Restarting Game!");
         SceneLoader.LoadNetworkScene(SceneName._4_Game);
     }
 
