@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Unity.Collections;
 using Unity.Netcode;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -46,7 +47,7 @@ public class PlayerAttributes : Singleton<PlayerAttributes>
     {
         PlayerData localPlayerData = playerDataHandler.GetLocalPlayerData();
         
-        if (localPlayerData.name != "")
+        if (localPlayerData.name != (FixedString128Bytes) "")
             localPlayerName = localPlayerData.name.ToString();
         
         localPlayerColorId = localPlayerData.colorId;
@@ -98,7 +99,7 @@ public class PlayerAttributes : Singleton<PlayerAttributes>
     private bool IsNameUsed(string playerName)
     {
         return playerDataHandler.GetAllPlayerData()
-            .Any(_playerData => _playerData.name == playerName && _playerData.clientId != networkManager.LocalClientId);
+            .Any(_playerData => _playerData.name == (FixedString128Bytes) playerName && _playerData.clientId != networkManager.LocalClientId);
     }
     
     public string UpdateNameIfNotAvailable(string playerName)

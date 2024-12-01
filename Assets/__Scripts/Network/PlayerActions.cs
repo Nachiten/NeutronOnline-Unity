@@ -127,7 +127,7 @@ public class PlayerActions : SingletonNetwork<PlayerActions>
         PlayerData _playerData = playerDataHandler.GetPlayerDataFromClientId(rpcParams.Receive.SenderClientId);
         
         playerName = playerAttributes.UpdateNameIfNotAvailable(playerName);
-        _playerData.name = playerName;
+        _playerData.name = (FixedString128Bytes) playerName;
         
         playerDataHandler.UpdatePlayerData(playerDataIndex, _playerData);
     }

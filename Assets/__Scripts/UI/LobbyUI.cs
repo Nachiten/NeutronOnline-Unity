@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Michsky.MUIP;
 using TMPro;
 using Unity.Netcode;
@@ -50,30 +51,18 @@ public class LobbyUI : MonoBehaviour
         UpdateLobbyList(new List<Lobby>());
     }
 
-    private void OnJoinCodeChanged(string newText)
-    {
-        newText = newText.Trim().ToUpper();
-        
-        if (newText.Length > 6)
-            newText = newText.Substring(0, 6);
-        
-        joinCodeInputField.text = newText;
-    }
-
-    private void OnDestroy()
-    {
-        if (lobbyHandler != null)
-            lobbyHandler.OnLobbyListChanged -= OnLobbyListChanged;
-    }
-
-    private void OnLobbyListChanged(List<Lobby> lobbyList)
-    {
-        UpdateLobbyList(lobbyList);
-    }
+    private string previousPlayerName;
+    private string previousJoinCode;
     
     private void OnPlayerNameChanged(string newText)
     {
-        newText = newText.Trim();
+        // Only allow upper and lowercase letters, numbers, hyphens and underscores
+        const string regex = "^[a-zA-Z0-9-_]*$";
+        
+        if (!Regex.IsMatch(newText, regex) && newText.Length > 0)
+        {
+            newText = previousPlayerName;
+        }
         
         // Max 30 characters
         if (newText.Length > 30)
@@ -83,8 +72,34 @@ public class LobbyUI : MonoBehaviour
         
         playerNameInputField.text = newText;
         playerAttributes.SetLocalPlayerName(newText);
+        previousPlayerName = newText;
     }
 
+    private void OnJoinCodeChanged(string newText)
+    {
+        // Only allow upper and lowercase letters and numbers
+        const string regex = "^[a-zA-Z0-9]*$";
+        
+        if (!Regex.IsMatch(newText, regex) && newText.Length > 0)
+        {
+            newText = previousJoinCode;
+        }
+        
+        newText = newText.Trim().ToUpper();
+        
+        // Max 6 characters
+        if (newText.Length > 6)
+            newText = newText.Substring(0, 6);
+        
+        joinCodeInputField.text = newText;
+        previousJoinCode = newText;
+    }
+    
+    private void OnLobbyListChanged(List<Lobby> lobbyList)
+    {
+        UpdateLobbyList(lobbyList);
+    }
+    
     private void OnMainMenuClick()
     {
         if (networkManager.IsServer)
@@ -145,5 +160,11 @@ public class LobbyUI : MonoBehaviour
      
         // Check if lists are identical by LobbyCode
         return !list1.Where((t, i) => t.LobbyCode != list2[i].LobbyCode).Any();
+    }
+    
+    private void OnDestroy()
+    {
+        if (lobbyHandler != null)
+            lobbyHandler.OnLobbyListChanged -= OnLobbyListChanged;
     }
 }

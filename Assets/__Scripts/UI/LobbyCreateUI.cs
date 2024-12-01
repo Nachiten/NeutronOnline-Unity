@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using Michsky.MUIP;
 using TMPro;
 using UnityEngine;
@@ -30,9 +31,17 @@ public class LobbyCreateUI : MonoBehaviour
         lobbyNameInputField.onValueChanged.AddListener(OnLobbyNameChanged);
     }
 
+    private string previousLobbyName;
+    
     private void OnLobbyNameChanged(string newText)
     {
-        newText = newText.Trim();
+        // Only allow upper and lowercase letters, numbers, and spaces but not more than one in a row
+        const string regex = "^[a-zA-Z0-9]+(?: [a-zA-Z0-9]+)* ?$";
+        
+        if (!Regex.IsMatch(newText, regex) && newText.Length > 0)
+        {
+            newText = previousLobbyName;
+        }
         
         // Max 30 characters
         if (lobbyNameInputField.text.Length > 30)
@@ -41,6 +50,7 @@ public class LobbyCreateUI : MonoBehaviour
         }
         
         lobbyNameInputField.text = newText;
+        previousLobbyName = newText;
     }
 
     private void OnCloseClick()
@@ -65,7 +75,7 @@ public class LobbyCreateUI : MonoBehaviour
         if (string.IsNullOrEmpty(lobbyNameInputField.text) || lobbyNameInputField.text == defaultLobbyName)
             lobbyNameInputField.text = defaultLobbyName + " " + Random.Range(1000, 10000);
 
-        return lobbyNameInputField.text;
+        return lobbyNameInputField.text.Trim();
     }
     
     public void SetShow(bool show)
