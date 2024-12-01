@@ -5,6 +5,7 @@ public class GridPositionSelection : MonoBehaviour
 {
     [SerializeField] private WinManager winManager;
     [SerializeField] private TurnSystem turnSystem;
+    [SerializeField] private HostDisconnectedUI hostDisconnectedUI;
     
     public event Action<GridPosition> OnGridPositionSelected;
     public event Action<GridPosition> OnGridPositionHovered;
@@ -15,8 +16,9 @@ public class GridPositionSelection : MonoBehaviour
     private void Start()
     {
         winManager.OnPlayerWon += OnPlayerWon;
+        hostDisconnectedUI.OnOtherPlayerDisconnected += OnOtherPlayerDisconnected;
     }
-
+    
     private void Update()
     {
         HandleHovering();
@@ -78,6 +80,12 @@ public class GridPositionSelection : MonoBehaviour
     }
     
     private void OnPlayerWon(int obj)
+    {
+        UnhoverPosition();
+        enabled = false;
+    }
+    
+    private void OnOtherPlayerDisconnected()
     {
         UnhoverPosition();
         enabled = false;

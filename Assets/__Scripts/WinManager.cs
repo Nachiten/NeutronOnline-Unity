@@ -6,7 +6,7 @@ public class WinManager : MonoBehaviour
     [SerializeField] private TurnSystem turnSystem;
 
     // Player index
-    public Action<int> OnPlayerWon;
+    public event Action<int> OnPlayerWon;
     
     private void Start()
     {
@@ -50,13 +50,6 @@ public class WinManager : MonoBehaviour
     
     private void PlayerWins(int playerIndex)
     {
-        Time.timeScale = 0;
-        
         OnPlayerWon?.Invoke(playerIndex);
-    }
-
-    private void OnDestroy()
-    {
-        Time.timeScale = 1;
     }
 }

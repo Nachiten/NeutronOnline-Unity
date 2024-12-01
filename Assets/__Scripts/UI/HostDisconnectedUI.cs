@@ -1,3 +1,4 @@
+using System;
 using Michsky.MUIP;
 using TMPro;
 using Unity.Netcode;
@@ -5,6 +6,8 @@ using UnityEngine;
 
 public class HostDisconnectedUI : MonoBehaviour
 {
+    public event Action OnOtherPlayerDisconnected;
+    
     [SerializeField] private ButtonManager mainMenuButton;
     [SerializeField] private TMP_Text disconnectReasonText;
 
@@ -42,6 +45,7 @@ public class HostDisconnectedUI : MonoBehaviour
     
         disconnectReasonText.text = "The other player has disconnected!!";
         SetShow(true);
+        OnOtherPlayerDisconnected?.Invoke();
     }
     
     private void OnHostDisconnected(ulong clientId)
@@ -50,6 +54,7 @@ public class HostDisconnectedUI : MonoBehaviour
         
         disconnectReasonText.text = "The host has disconnected!!";
         SetShow(true);
+        OnOtherPlayerDisconnected?.Invoke();
     }
 
     private void OnDestroy()
