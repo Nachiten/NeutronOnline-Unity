@@ -1,0 +1,183 @@
+Mono path[0] = 'C:/Users/ignac/AppData/Local/Programs/NeutronOnline/NeutronOnline_Data/Managed'
+Mono config path = 'C:/Users/ignac/AppData/Local/Programs/NeutronOnline/MonoBleedingEdge/etc'
+Initialize engine version: 6000.0.15f1 (6a96561936c0)
+[Subsystems] Discovering subsystems at path C:/Users/ignac/AppData/Local/Programs/NeutronOnline/NeutronOnline_Data/UnitySubsystems
+kGfxThreadingModeSplitJobs is not supported on Direct3D 11. Reverting to kGfxThreadingModeClientWorkerJobs instead.
+GfxDevice: creating device client; kGfxThreadingModeClientWorkerJobs
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.1]
+    Renderer: NVIDIA GeForce RTX 3060 (ID=0x2487)
+    Vendor:   NVIDIA
+    VRAM:     12110 MB
+    Driver:   32.0.15.6614
+Begin MonoManager ReloadAssembly
+- Loaded All Assemblies, in  7.346 seconds
+- Finished resetting the current domain, in  0.002 seconds
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+<RI> Initializing input.
+New input system (experimental) initialized
+Using Windows.Gaming.Input
+<RI> Input initialized.
+<RI> Initialized touch support.
+UnloadTime: 0.589300 ms
+RenderGraph is now disabled.
+Unloading 6 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 8.090000 ms
+Unloading 16 unused Assets to reduce memory usage. Loaded Objects now: 2858.
+Total: 2.044800 ms (FindLiveObjects: 0.135000 ms CreateObjectMapping: 0.058400 ms MarkObjects: 1.819600 ms  DeleteObjects: 0.031800 ms)
+
+Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 1.836900 ms
+Unloading 4 unused Assets to reduce memory usage. Loaded Objects now: 3189.
+Total: 2.435600 ms (FindLiveObjects: 0.158500 ms CreateObjectMapping: 0.071500 ms MarkObjects: 2.130100 ms  DeleteObjects: 0.075500 ms)
+
+best region is southamerica-east1
+OnClientConnectedCallback: 0 | IsServer: True
+Unloading 3 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 3.791600 ms
+Unloading 5 unused Assets to reduce memory usage. Loaded Objects now: 3146.
+Total: 4.017400 ms (FindLiveObjects: 0.148500 ms CreateObjectMapping: 0.067800 ms MarkObjects: 3.768100 ms  DeleteObjects: 0.032700 ms)
+
+OnClientConnectedCallback: 1 | IsServer: True
+STARTING GAME!!!
+Unloading 6 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 4.721000 ms
+Unloading 2 unused Assets to reduce memory usage. Loaded Objects now: 3471.
+Total: 4.761800 ms (FindLiveObjects: 0.294900 ms CreateObjectMapping: 0.079800 ms MarkObjects: 4.368400 ms  DeleteObjects: 0.018500 ms)
+
+OnMoveStartedClientRpc
+FinishPieceMovementClientRpc: (2, 2) -> (1, 1)
+OnMoveEndedClientRpc
+OnMoveStartedClientRpc
+FinishPieceMovementClientRpc: (2, 0) -> (2, 3)
+OnMoveEndedClientRpc
+OnMoveStartedClientRpc
+FinishPieceMovementClientRpc: (1, 1) -> (0, 1)
+OnMoveEndedClientRpc
+OnMoveStartedClientRpc
+FinishPieceMovementClientRpc: (1, 4) -> (1, 1)
+OnMoveEndedClientRpc
+OnMoveStartedClientRpc
+FinishPieceMovementClientRpc: (0, 1) -> (1, 2)
+OnMoveEndedClientRpc
+OnMoveStartedClientRpc
+FinishPieceMovementClientRpc: (4, 0) -> (1, 3)
+OnMoveEndedClientRpc
+OnMoveStartedClientRpc
+FinishPieceMovementClientRpc: (1, 2) -> (0, 1)
+OnMoveEndedClientRpc
+OnMoveStartedClientRpc
+FinishPieceMovementClientRpc: (0, 4) -> (0, 2)
+OnMoveEndedClientRpc
+OnMoveStartedClientRpc
+FinishPieceMovementClientRpc: (0, 1) -> (1, 2)
+OnMoveEndedClientRpc
+OnMoveStartedClientRpc
+FinishPieceMovementClientRpc: (3, 0) -> (3, 3)
+OnMoveEndedClientRpc
+OnMoveStartedClientRpc
+FinishPieceMovementClientRpc: (1, 2) -> (0, 3)
+OnMoveEndedClientRpc
+OnMoveStartedClientRpc
+FinishPieceMovementClientRpc: (1, 1) -> (1, 2)
+OnMoveEndedClientRpc
+OnMoveStartedClientRpc
+FinishPieceMovementClientRpc: (0, 3) -> (1, 4)
+OnMoveEndedClientRpc
+Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
+OnClientDisconnectCallback: 1 | IsServer: True
+UnloadTime: 2.048500 ms
+Unloading 18 unused Assets to reduce memory usage. Loaded Objects now: 2990.
+Total: 4.589800 ms (FindLiveObjects: 0.247600 ms CreateObjectMapping: 0.089500 ms MarkObjects: 4.154700 ms  DeleteObjects: 0.097800 ms)
+
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+OnClientDisconnectCallback: 0 | IsServer: True
+UnloadTime: 0.214100 ms
+Unloading 3 unused Assets to reduce memory usage. Loaded Objects now: 3017.
+Total: 5.032800 ms (FindLiveObjects: 0.210300 ms CreateObjectMapping: 0.068400 ms MarkObjects: 4.660200 ms  DeleteObjects: 0.093500 ms)
+
+Unloading 3 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.340500 ms
+Unloading 12 unused Assets to reduce memory usage. Loaded Objects now: 2972.
+Total: 4.883600 ms (FindLiveObjects: 0.209400 ms CreateObjectMapping: 0.067100 ms MarkObjects: 4.570200 ms  DeleteObjects: 0.036500 ms)
+
+Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.215100 ms
+Unloading 4 unused Assets to reduce memory usage. Loaded Objects now: 3216.
+Total: 4.163600 ms (FindLiveObjects: 0.246800 ms CreateObjectMapping: 0.095600 ms MarkObjects: 3.755900 ms  DeleteObjects: 0.065200 ms)
+
+best region is southamerica-east1
+OnClientConnectedCallback: 0 | IsServer: True
+Unloading 3 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.669000 ms
+Unloading 5 unused Assets to reduce memory usage. Loaded Objects now: 3173.
+Total: 4.631800 ms (FindLiveObjects: 0.446800 ms CreateObjectMapping: 0.091300 ms MarkObjects: 4.054300 ms  DeleteObjects: 0.038900 ms)
+
+OnClientConnectedCallback: 1 | IsServer: True
+STARTING GAME!!!
+STARTING GAME!!!
+Unloading 6 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.698200 ms
+Unloading 3 unused Assets to reduce memory usage. Loaded Objects now: 3471.
+Total: 5.798900 ms (FindLiveObjects: 0.299100 ms CreateObjectMapping: 0.084000 ms MarkObjects: 5.383600 ms  DeleteObjects: 0.031800 ms)
+
+OnMoveStartedClientRpc
+FinishPieceMovementClientRpc: (2, 2) -> (3, 1)
+OnMoveEndedClientRpc
+OnMoveStartedClientRpc
+FinishPieceMovementClientRpc: (4, 0) -> (4, 3)
+OnMoveEndedClientRpc
+OnMoveStartedClientRpc
+FinishPieceMovementClientRpc: (3, 1) -> (2, 2)
+OnMoveEndedClientRpc
+OnMoveStartedClientRpc
+FinishPieceMovementClientRpc: (3, 4) -> (3, 1)
+OnMoveEndedClientRpc
+OnMoveStartedClientRpc
+FinishPieceMovementClientRpc: (2, 2) -> (2, 1)
+OnMoveEndedClientRpc
+OnMoveStartedClientRpc
+FinishPieceMovementClientRpc: (1, 0) -> (1, 3)
+OnMoveEndedClientRpc
+OnMoveStartedClientRpc
+FinishPieceMovementClientRpc: (2, 1) -> (3, 2)
+OnMoveEndedClientRpc
+OnMoveStartedClientRpc
+FinishPieceMovementClientRpc: (2, 4) -> (2, 1)
+OnMoveEndedClientRpc
+OnMoveStartedClientRpc
+FinishPieceMovementClientRpc: (3, 2) -> (4, 1)
+OnMoveEndedClientRpc
+OnMoveStartedClientRpc
+FinishPieceMovementClientRpc: (1, 3) -> (3, 3)
+OnMoveEndedClientRpc
+OnMoveStartedClientRpc
+FinishPieceMovementClientRpc: (4, 1) -> (4, 2)
+OnMoveEndedClientRpc
+OnMoveStartedClientRpc
+FinishPieceMovementClientRpc: (1, 4) -> (4, 1)
+OnMoveEndedClientRpc
+OnMoveStartedClientRpc
+FinishPieceMovementClientRpc: (4, 2) -> (3, 2)
+OnMoveEndedClientRpc
+OnMoveStartedClientRpc
+FinishPieceMovementClientRpc: (0, 0) -> (2, 2)
+OnMoveEndedClientRpc
+OnMoveStartedClientRpc
+FinishPieceMovementClientRpc: (3, 2) -> (4, 2)
+OnMoveEndedClientRpc
+OnMoveStartedClientRpc
+FinishPieceMovementClientRpc: (2, 1) -> (3, 2)
+OnMoveEndedClientRpc
+OnClientDisconnectCallback: 1 | IsServer: True
+Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.855700 ms
+Unloading 18 unused Assets to reduce memory usage. Loaded Objects now: 2990.
+Total: 5.869800 ms (FindLiveObjects: 0.301900 ms CreateObjectMapping: 0.085700 ms MarkObjects: 5.394600 ms  DeleteObjects: 0.087200 ms)
+
+OnClientDisconnectCallback: 0 | IsServer: True
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.173600 ms
+Unloading 3 unused Assets to reduce memory usage. Loaded Objects now: 3017.
+Total: 4.807300 ms (FindLiveObjects: 0.148100 ms CreateObjectMapping: 0.068400 ms MarkObjects: 4.505300 ms  DeleteObjects: 0.084700 ms)
+
