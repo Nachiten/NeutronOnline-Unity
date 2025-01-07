@@ -41,19 +41,10 @@ public partial class @AutoGen_PlayerInputActions: IInputActionCollection2, IDisp
                     ""name"": ""SecondaryAction"",
                     ""type"": ""Button"",
                     ""id"": ""eec25b1f-314c-451c-a2d3-add9796f1102"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""MoveController"",
-                    ""type"": ""Value"",
-                    ""id"": ""44376b2d-4830-4bbb-a2a5-c85bfe521e9a"",
-                    ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -72,6 +63,17 @@ public partial class @AutoGen_PlayerInputActions: IInputActionCollection2, IDisp
                     ""name"": """",
                     ""id"": ""475770ac-b092-448d-a719-cb43c8ff9b32"",
                     ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PrimaryAction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3cff3193-b5fa-421d-bb7e-56098989fb85"",
+                    ""path"": ""<Touchscreen>/primaryTouch/tap"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -100,61 +102,6 @@ public partial class @AutoGen_PlayerInputActions: IInputActionCollection2, IDisp
                     ""action"": ""SecondaryAction"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""StickController"",
-                    ""id"": ""5f14bee0-9788-42f2-a988-1357d1f1d15d"",
-                    ""path"": ""2DVector"",
-                    ""interactions"": """",
-                    ""processors"": ""StickDeadzone"",
-                    ""groups"": """",
-                    ""action"": ""MoveController"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""up"",
-                    ""id"": ""c6292e42-e315-48eb-bb13-05c47cc6bfb7"",
-                    ""path"": ""<Joystick>/stick/up"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""MoveController"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""down"",
-                    ""id"": ""4e907815-9d01-4f5e-9d9e-804e7a2253f3"",
-                    ""path"": ""<Joystick>/stick/down"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""MoveController"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""left"",
-                    ""id"": ""38f1ff00-7848-4030-8510-18b429162043"",
-                    ""path"": ""<Joystick>/stick/left"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""MoveController"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""right"",
-                    ""id"": ""074c22d3-a710-4d50-a083-24c6eb4ec196"",
-                    ""path"": ""<Joystick>/stick/right"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""MoveController"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -165,7 +112,6 @@ public partial class @AutoGen_PlayerInputActions: IInputActionCollection2, IDisp
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_PrimaryAction = m_Player.FindAction("PrimaryAction", throwIfNotFound: true);
         m_Player_SecondaryAction = m_Player.FindAction("SecondaryAction", throwIfNotFound: true);
-        m_Player_MoveController = m_Player.FindAction("MoveController", throwIfNotFound: true);
     }
 
     ~@AutoGen_PlayerInputActions()
@@ -234,14 +180,12 @@ public partial class @AutoGen_PlayerInputActions: IInputActionCollection2, IDisp
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_PrimaryAction;
     private readonly InputAction m_Player_SecondaryAction;
-    private readonly InputAction m_Player_MoveController;
     public struct PlayerActions
     {
         private @AutoGen_PlayerInputActions m_Wrapper;
         public PlayerActions(@AutoGen_PlayerInputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @PrimaryAction => m_Wrapper.m_Player_PrimaryAction;
         public InputAction @SecondaryAction => m_Wrapper.m_Player_SecondaryAction;
-        public InputAction @MoveController => m_Wrapper.m_Player_MoveController;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -257,9 +201,6 @@ public partial class @AutoGen_PlayerInputActions: IInputActionCollection2, IDisp
             @SecondaryAction.started += instance.OnSecondaryAction;
             @SecondaryAction.performed += instance.OnSecondaryAction;
             @SecondaryAction.canceled += instance.OnSecondaryAction;
-            @MoveController.started += instance.OnMoveController;
-            @MoveController.performed += instance.OnMoveController;
-            @MoveController.canceled += instance.OnMoveController;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -270,9 +211,6 @@ public partial class @AutoGen_PlayerInputActions: IInputActionCollection2, IDisp
             @SecondaryAction.started -= instance.OnSecondaryAction;
             @SecondaryAction.performed -= instance.OnSecondaryAction;
             @SecondaryAction.canceled -= instance.OnSecondaryAction;
-            @MoveController.started -= instance.OnMoveController;
-            @MoveController.performed -= instance.OnMoveController;
-            @MoveController.canceled -= instance.OnMoveController;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -294,6 +232,5 @@ public partial class @AutoGen_PlayerInputActions: IInputActionCollection2, IDisp
     {
         void OnPrimaryAction(InputAction.CallbackContext context);
         void OnSecondaryAction(InputAction.CallbackContext context);
-        void OnMoveController(InputAction.CallbackContext context);
     }
 }

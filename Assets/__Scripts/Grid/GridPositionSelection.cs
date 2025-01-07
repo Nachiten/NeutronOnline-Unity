@@ -27,6 +27,9 @@ public class GridPositionSelection : MonoBehaviour
     
     private void HandleHovering()
     {
+        if (MobileBuildCheck.IsMobileBuild())
+            return;
+        
         GridPosition newHoveredGridPosition = MouseWorldVisual.GetMouseGridPosition();
 
         if (newHoveredGridPosition == hoveredGridPosition)
@@ -67,7 +70,7 @@ public class GridPositionSelection : MonoBehaviour
     
     private void UnhoverPosition()
     {
-        if (!hoveredGridPosition)
+        if (!hoveredGridPosition || MobileBuildCheck.IsMobileBuild())
             return;
         
         OnGridPositionUnhovered?.Invoke(hoveredGridPosition);
@@ -90,4 +93,6 @@ public class GridPositionSelection : MonoBehaviour
         UnhoverPosition();
         enabled = false;
     }
+    
+
 }

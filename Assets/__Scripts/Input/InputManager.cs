@@ -1,6 +1,5 @@
 #define USE_NEW_INPUT_SYSTEM
 
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -28,7 +27,9 @@ public class InputManager : Singleton<InputManager>
     public Vector2 GetMouseScreenPosition()
     {
 #if USE_NEW_INPUT_SYSTEM
-        return Mouse.current.position.ReadValue();
+        return MobileBuildCheck.IsMobileBuild() ? 
+            Touchscreen.current.primaryTouch.position.ReadValue() :
+            Mouse.current.position.ReadValue();
 #else
         return Input.mousePosition;
 #endif
