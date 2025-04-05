@@ -262,12 +262,12 @@ public class LobbyHandler : Singleton<LobbyHandler>
     
     private RelayServerData GenerateRelayServerData(JoinAllocation joinAllocation)
     {
-        return new RelayServerData(joinAllocation, RELAY_CONNECTION_TYPE);
+        return joinAllocation.ToRelayServerData(RELAY_CONNECTION_TYPE);
     }
 
     private RelayServerData GenerateRelayServerData(Allocation joinAllocation)
     {
-        return new RelayServerData(joinAllocation, RELAY_CONNECTION_TYPE);
+        return joinAllocation.ToRelayServerData(RELAY_CONNECTION_TYPE);
     }
     
     public async void JoinWithCode(string lobbyCode)
